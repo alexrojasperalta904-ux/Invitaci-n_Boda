@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitación de Boda</title>
+<title>Invitación</title>
 
 <style>
 *{
@@ -13,76 +13,76 @@
 }
 
 body{
+    background:#f5efe6;
     height:100vh;
+    overflow:hidden;
+}
+
+/* GIF */
+.gif-container{
+    position:fixed;
+    inset:0;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#f5efe6;
-    overflow:hidden;
-    font-family:Arial, sans-serif;
-}
-
-.contenedor{
-    position:relative;
-    width:350px;
-    height:260px;
-    cursor:pointer;
-}
-
-/* CARTA */
-.carta{
-    position:absolute;
-    left:50%;
-    bottom:30px;
-    transform:translateX(-50%);
-    width:300px;
-    height:420px;
     background:white;
-    border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-    overflow:hidden;
     z-index:1;
-    transition:all 1.5s ease;
 }
 
-.carta img{
+.gif-container img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+/* SOBRE */
+.sobre-container{
+    position:absolute;
+    width:350px;
+    height:250px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    cursor:pointer;
+    z-index:10;
+}
+
+.gif-salida{
+    position:absolute;
+    width:280px;
+    height:380px;
+    left:50%;
+    bottom:40px;
+    transform:translateX(-50%);
+    transition:all 2s ease;
+    z-index:2;
+}
+
+.gif-salida img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-/* SOBRE */
-.sobre{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:220px;
-    z-index:3;
-}
-
-/* Base */
 .base{
     position:absolute;
     width:100%;
     height:100%;
-    background:#d8b48c;
+    background:#d7b48a;
     border-radius:8px;
 }
 
-/* Solapa superior */
-.solapa{
+.tapa{
     position:absolute;
-    top:0;
     width:100%;
     height:120px;
-    background:#c79f72;
+    background:#c69c6d;
     clip-path:polygon(0 0,100% 0,50% 100%);
     transform-origin:top;
     transition:1s;
     z-index:5;
 }
 
-/* Frente del sobre */
 .frente{
     position:absolute;
     bottom:0;
@@ -93,7 +93,6 @@ body{
     z-index:4;
 }
 
-/* Sello */
 .sello{
     position:absolute;
     left:50%;
@@ -103,46 +102,61 @@ body{
     height:60px;
     border-radius:50%;
     background:#8b0000;
-    color:white;
     display:flex;
-    align-items:center;
     justify-content:center;
-    font-size:24px;
+    align-items:center;
+    color:white;
+    font-size:22px;
     z-index:6;
-    box-shadow:0 5px 15px rgba(0,0,0,.3);
 }
 
-/* Animación */
-.abierto .solapa{
+/* ANIMACIÓN */
+.abierto .tapa{
     transform:rotateX(180deg);
 }
 
-.abierto .carta{
-    bottom:120px;
+.abierto .gif-salida{
+    bottom:280px;
+}
+
+.oculto{
+    opacity:0;
+    pointer-events:none;
+    transition:1s;
 }
 </style>
 </head>
 
 <body>
 
-<div class="contenedor" id="sobre">
+<div class="gif-container">
+    <img src="boda.gif" alt="Invitación">
+</div>
 
-    <div class="carta">
+<div class="sobre-container" id="sobre">
+
+    <div class="gif-salida">
         <img src="boda.gif" alt="Invitación">
     </div>
 
-    <div class="sobre">
-        <div class="base"></div>
-        <div class="solapa"></div>
-        <div class="frente"></div>
-        <div class="sello">💌</div>
-    </div>
+    <div class="base"></div>
+    <div class="tapa"></div>
+    <div class="frente"></div>
+    <div class="sello">💌</div>
 
 </div>
 
 <script>
-document.getElementById("sobre").addEventListener("click", function(){
-    this.classList.toggle("abierto");
+const sobre = document.getElementById("sobre");
+
+sobre.addEventListener("click", () => {
+
+    sobre.classList.add("abierto");
+
+    setTimeout(() => {
+        sobre.classList.add("oculto");
+    }, 2200);
+
 });
 </script>
 
