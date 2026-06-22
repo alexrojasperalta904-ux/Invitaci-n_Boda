@@ -18,7 +18,7 @@ body{
     overflow:hidden;
 }
 
-/* GIF */
+/* GIF DE FONDO - CORREGIDO */
 .gif-container{
     position:fixed;
     inset:0;
@@ -27,6 +27,15 @@ body{
     align-items:center;
     background:white;
     z-index:1;
+    opacity: 0; /* Empieza oculto */
+    pointer-events: none; /* Evita que interfiera mientras está oculto */
+    transition: opacity 1s ease; /* Transición suave al aparecer */
+}
+
+/* Nueva clase para mostrar el fondo */
+.gif-container.mostrar {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .gif-container img{
@@ -129,7 +138,7 @@ body{
 
 <body>
 
-<div class="gif-container">
+<div class="gif-container" id="fondo-gif">
     <img src="boda.gif" alt="Invitación">
 </div>
 
@@ -148,13 +157,16 @@ body{
 
 <script>
 const sobre = document.getElementById("sobre");
+const fondoGif = document.getElementById("fondo-gif"); // Seleccionamos el fondo
 
 sobre.addEventListener("click", () => {
 
     sobre.classList.add("abierto");
 
+    // Espera a que termine la animación de apertura
     setTimeout(() => {
         sobre.classList.add("oculto");
+        fondoGif.classList.add("mostrar"); // Mostramos el GIF de pantalla completa aquí
     }, 2200);
 
 });
