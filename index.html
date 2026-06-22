@@ -29,10 +29,10 @@ body{
     z-index:1;
     opacity: 0; /* Empieza oculto */
     pointer-events: none; /* Evita que interfiera mientras está oculto */
-    transition: opacity 1s ease; /* Transición suave al aparecer */
+    transition: opacity 1s ease;
 }
 
-/* Nueva clase para mostrar el fondo */
+/* Clase para mostrar el fondo */
 .gif-container.mostrar {
     opacity: 1;
     pointer-events: auto;
@@ -56,6 +56,7 @@ body{
     z-index:10;
 }
 
+/* GIF QUE SALE - CORREGIDO */
 .gif-salida{
     position:absolute;
     width:280px;
@@ -63,8 +64,15 @@ body{
     left:50%;
     bottom:40px;
     transform:translateX(-50%);
-    transition:all 2s ease;
+    /* Transición más larga para la animación */
+    transition: all 2s ease;
     z-index:2;
+    opacity: 0; /* Empieza invisible detrás del frente */
+}
+
+/* Clase para que el GIF de salida aparezca */
+.aparecer .gif-salida {
+    opacity: 1;
 }
 
 .gif-salida img{
@@ -88,7 +96,7 @@ body{
     background:#c69c6d;
     clip-path:polygon(0 0,100% 0,50% 100%);
     transform-origin:top;
-    transition:1s;
+    transition: 1s ease;
     z-index:5;
 }
 
@@ -117,6 +125,7 @@ body{
     color:white;
     font-size:22px;
     z-index:6;
+    transition: 0.5s ease;
 }
 
 /* ANIMACIÓN */
@@ -124,14 +133,15 @@ body{
     transform:rotateX(180deg);
 }
 
+/* Al abrir, movemos el GIF hacia arriba */
 .abierto .gif-salida{
-    bottom:280px;
+    bottom: 280px;
 }
 
 .oculto{
     opacity:0;
     pointer-events:none;
-    transition:1s;
+    transition:1s ease;
 }
 </style>
 </head>
@@ -144,7 +154,7 @@ body{
 
 <div class="sobre-container" id="sobre">
 
-    <div class="gif-salida">
+    <div class="gif-salida" id="gif-salida">
         <img src="boda.gif" alt="Invitación">
     </div>
 
@@ -157,18 +167,23 @@ body{
 
 <script>
 const sobre = document.getElementById("sobre");
-const fondoGif = document.getElementById("fondo-gif"); // Seleccionamos el fondo
+const fondoGif = document.getElementById("fondo-gif");
+const gifSalidaContenedor = document.getElementById("sobre"); // Usamos el contenedor del sobre
 
 sobre.addEventListener("click", () => {
-
+    // 1. Abrimos la tapa y movemos el GIF hacia arriba (invisible al principio)
     sobre.classList.add("abierto");
 
-    // Espera a que termine la animación de apertura
+    // 2. Un momento después de que la tapa se abra, hacemos visible el GIF que sale
+    setTimeout(() => {
+        gifSalidaContenedor.classList.add("aparecer"); // Hace que la opacidad del gif-salida sea 1
+    }, 500); // 0.5 segundos de retraso para que la tapa se abra un poco primero
+
+    // 3. Cuando termine toda la animación de salida, mostramos el fondo
     setTimeout(() => {
         sobre.classList.add("oculto");
-        fondoGif.classList.add("mostrar"); // Mostramos el GIF de pantalla completa aquí
-    }, 2200);
-
+        fondoGif.classList.add("mostrar");
+    }, 2200); // 2.2 segundos para coordinar con la duración de la animación de salida (all 2s ease)
 });
 </script>
 
