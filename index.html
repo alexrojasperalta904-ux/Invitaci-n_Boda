@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitación</title>
+<title>Invitación de Boda</title>
 
 <style>
 *{
@@ -13,106 +13,136 @@
 }
 
 body{
-    background:#f5efe6;
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    background:#f5efe6;
     overflow:hidden;
-    font-family:Georgia, serif;
+    font-family:Arial, sans-serif;
+}
+
+.contenedor{
+    position:relative;
+    width:350px;
+    height:260px;
+    cursor:pointer;
+}
+
+/* CARTA */
+.carta{
+    position:absolute;
+    left:50%;
+    bottom:30px;
+    transform:translateX(-50%);
+    width:300px;
+    height:420px;
+    background:white;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    overflow:hidden;
+    z-index:1;
+    transition:all 1.5s ease;
+}
+
+.carta img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 /* SOBRE */
 .sobre{
-    width:320px;
+    position:absolute;
+    bottom:0;
+    width:100%;
     height:220px;
-    position:relative;
-    cursor:pointer;
-    transition:all 1s ease;
+    z-index:3;
 }
 
+/* Base */
 .base{
+    position:absolute;
     width:100%;
     height:100%;
-    background:#d9c2a3;
-    position:absolute;
+    background:#d8b48c;
     border-radius:8px;
 }
 
-.tapa{
-    width:100%;
-    height:110px;
-    background:#c8ad89;
+/* Solapa superior */
+.solapa{
     position:absolute;
     top:0;
+    width:100%;
+    height:120px;
+    background:#c79f72;
     clip-path:polygon(0 0,100% 0,50% 100%);
     transform-origin:top;
-    transition:transform 1s ease;
-}
-
-.sello{
-    position:absolute;
-    top:80px;
-    left:50%;
-    transform:translateX(-50%);
-    width:55px;
-    height:55px;
-    background:#8b0000;
-    border-radius:50%;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:22px;
+    transition:1s;
     z-index:5;
 }
 
-/* GIF */
-.invitacion{
-    position:fixed;
-    inset:0;
-    background:white;
-    display:none;
-    justify-content:center;
-    align-items:center;
-}
-
-.invitacion img{
+/* Frente del sobre */
+.frente{
+    position:absolute;
+    bottom:0;
     width:100%;
-    height:100%;
-    object-fit:contain;
+    height:140px;
+    background:#caa276;
+    clip-path:polygon(0 0,50% 100%,100% 0,100% 100%,0 100%);
+    z-index:4;
 }
 
-.abierto .tapa{
+/* Sello */
+.sello{
+    position:absolute;
+    left:50%;
+    top:85px;
+    transform:translateX(-50%);
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#8b0000;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    z-index:6;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+/* Animación */
+.abierto .solapa{
     transform:rotateX(180deg);
+}
+
+.abierto .carta{
+    bottom:120px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="sobre" id="sobre">
-    <div class="base"></div>
-    <div class="tapa"></div>
-    <div class="sello">💌</div>
-</div>
+<div class="contenedor" id="sobre">
 
-<div class="invitacion" id="invitacion">
-    <!-- CAMBIA "invitacion.gif" POR EL NOMBRE DE TU GIF -->
-    <img src="boda.gif" alt="Invitación">
+    <div class="carta">
+        <img src="boda.gif" alt="Invitación">
+    </div>
+
+    <div class="sobre">
+        <div class="base"></div>
+        <div class="solapa"></div>
+        <div class="frente"></div>
+        <div class="sello">💌</div>
+    </div>
+
 </div>
 
 <script>
-const sobre = document.getElementById("sobre");
-const invitacion = document.getElementById("invitacion");
-
-sobre.addEventListener("click", () => {
-    sobre.classList.add("abierto");
-
-    setTimeout(() => {
-        sobre.style.display = "none";
-        invitacion.style.display = "flex";
-    }, 1200);
+document.getElementById("sobre").addEventListener("click", function(){
+    this.classList.toggle("abierto");
 });
 </script>
 
