@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#f5efe6;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    font-family:Georgia, serif;
+}
+
+/* SOBRE */
+.sobre{
+    width:320px;
+    height:220px;
+    position:relative;
+    cursor:pointer;
+    transition:all 1s ease;
+}
+
+.base{
+    width:100%;
+    height:100%;
+    background:#d9c2a3;
+    position:absolute;
+    border-radius:8px;
+}
+
+.tapa{
+    width:100%;
+    height:110px;
+    background:#c8ad89;
+    position:absolute;
+    top:0;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top;
+    transition:transform 1s ease;
+}
+
+.sello{
+    position:absolute;
+    top:80px;
+    left:50%;
+    transform:translateX(-50%);
+    width:55px;
+    height:55px;
+    background:#8b0000;
+    border-radius:50%;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    z-index:5;
+}
+
+/* GIF */
+.invitacion{
+    position:fixed;
+    inset:0;
+    background:white;
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.invitacion img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.abierto .tapa{
+    transform:rotateX(180deg);
+}
+</style>
+</head>
+
+<body>
+
+<div class="sobre" id="sobre">
+    <div class="base"></div>
+    <div class="tapa"></div>
+    <div class="sello">💌</div>
+</div>
+
+<div class="invitacion" id="invitacion">
+    <!-- CAMBIA "invitacion.gif" POR EL NOMBRE DE TU GIF -->
+    <img src="invitacion.gif" alt="Invitación">
+</div>
+
+<script>
+const sobre = document.getElementById("sobre");
+const invitacion = document.getElementById("invitacion");
+
+sobre.addEventListener("click", () => {
+    sobre.classList.add("abierto");
+
+    setTimeout(() => {
+        sobre.style.display = "none";
+        invitacion.style.display = "flex";
+    }, 1200);
+});
+</script>
+
+</body>
+</html>
