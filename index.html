@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f5efe6;height:100vh;overflow:hidden}
+.gif-container{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#fff;z-index:1;opacity:0;pointer-events:none;transition:opacity 1s}
+.gif-container.mostrar{opacity:1;pointer-events:auto}
+.gif-container img{width:100%;height:100%;object-fit:contain}
+.sobre-container{position:absolute;width:350px;height:250px;left:50%;top:50%;transform:translate(-50%,-50%);cursor:pointer;z-index:10}
+.gif-salida{position:absolute;width:280px;height:380px;left:50%;bottom:40px;transform:translateX(-50%);transition:all 2s ease;z-index:2;opacity:0}
+.aparecer .gif-salida{opacity:1}
+.gif-salida img{width:100%;height:100%;object-fit:cover}
+.base{position:absolute;width:100%;height:100%;background:#d7b48a;border-radius:8px}
+.tapa{position:absolute;width:100%;height:120px;background:#c69c6d;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:1s;z-index:5}
+.frente{position:absolute;bottom:0;width:100%;height:140px;background:#caa276;clip-path:polygon(0 0,50% 100%,100% 0,100% 100%,0 100%);z-index:4}
+.sello{position:absolute;left:50%;top:85px;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;background:#8b0000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:6}
+.abierto .tapa{transform:rotateX(180deg)}
+.abierto .gif-salida{bottom:280px}
+.oculto{opacity:0;pointer-events:none;transition:1s}
+</style>
+</head>
+<body>
+<audio id="musica" preload="auto" loop>
+<source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div class="gif-container" id="fondo-gif">
+<img src="boda.gif" alt="Invitación">
+</div>
+
+<div class="sobre-container" id="sobre">
+<div class="gif-salida"><img src="boda.gif" alt="Invitación"></div>
+<div class="base"></div>
+<div class="tapa"></div>
+<div class="frente"></div>
+<div class="sello">💌</div>
+</div>
+
+<script>
+const sobre=document.getElementById("sobre");
+const fondoGif=document.getElementById("fondo-gif");
+const gifSalidaContenedor=document.getElementById("sobre");
+const musica=document.getElementById("musica");
+let abierto=false;
+sobre.addEventListener("click",async()=>{
+ if(abierto)return;
+ abierto=true;
+ try{
+   musica.volume=1;
+   musica.loop=true;
+   musica.currentTime=0;
+   await musica.play();
+ }catch(e){console.log(e);}
+ sobre.classList.add("abierto");
+ setTimeout(()=>gifSalidaContenedor.classList.add("aparecer"),500);
+ setTimeout(()=>{
+   sobre.classList.add("oculto");
+   fondoGif.classList.add("mostrar");
+ },2200);
+});
+</script>
+</body>
+</html>
