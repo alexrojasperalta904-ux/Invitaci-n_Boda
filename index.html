@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,7 +19,7 @@ body{
     overflow:hidden;
 }
 
-/* GIF DE FONDO - CORREGIDO */
+/* GIF DE FONDO */
 .gif-container{
     position:fixed;
     inset:0;
@@ -27,15 +28,14 @@ body{
     align-items:center;
     background:white;
     z-index:1;
-    opacity: 0; /* Empieza oculto */
-    pointer-events: none; /* Evita que interfiera mientras está oculto */
-    transition: opacity 1s ease;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 1s ease;
 }
 
-/* Clase para mostrar el fondo */
-.gif-container.mostrar {
-    opacity: 1;
-    pointer-events: auto;
+.gif-container.mostrar{
+    opacity:1;
+    pointer-events:auto;
 }
 
 .gif-container img{
@@ -56,7 +56,7 @@ body{
     z-index:10;
 }
 
-/* GIF QUE SALE - CORREGIDO */
+/* CARTA */
 .gif-salida{
     position:absolute;
     width:280px;
@@ -64,15 +64,13 @@ body{
     left:50%;
     bottom:40px;
     transform:translateX(-50%);
-    /* Transición más larga para la animación */
-    transition: all 2s ease;
+    transition:all 2s ease;
     z-index:2;
-    opacity: 0; /* Empieza invisible detrás del frente */
+    opacity:0;
 }
 
-/* Clase para que el GIF de salida aparezca */
-.aparecer .gif-salida {
-    opacity: 1;
+.aparecer .gif-salida{
+    opacity:1;
 }
 
 .gif-salida img{
@@ -96,7 +94,7 @@ body{
     background:#c69c6d;
     clip-path:polygon(0 0,100% 0,50% 100%);
     transform-origin:top;
-    transition: 1s ease;
+    transition:1s ease;
     z-index:5;
 }
 
@@ -125,17 +123,15 @@ body{
     color:white;
     font-size:22px;
     z-index:6;
-    transition: 0.5s ease;
+    transition:.5s ease;
 }
 
-/* ANIMACIÓN */
 .abierto .tapa{
     transform:rotateX(180deg);
 }
 
-/* Al abrir, movemos el GIF hacia arriba */
 .abierto .gif-salida{
-    bottom: 280px;
+    bottom:280px;
 }
 
 .oculto{
@@ -148,13 +144,20 @@ body{
 
 <body>
 
+<!-- Música -->
+<audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<!-- GIF FINAL -->
 <div class="gif-container" id="fondo-gif">
     <img src="boda.gif" alt="Invitación">
 </div>
 
+<!-- SOBRE -->
 <div class="sobre-container" id="sobre">
 
-    <div class="gif-salida" id="gif-salida">
+    <div class="gif-salida">
         <img src="boda.gif" alt="Invitación">
     </div>
 
@@ -168,24 +171,42 @@ body{
 <script>
 const sobre = document.getElementById("sobre");
 const fondoGif = document.getElementById("fondo-gif");
-const gifSalidaContenedor = document.getElementById("sobre"); // Usamos el contenedor del sobre
+const gifSalidaContenedor = document.getElementById("sobre");
+const musica = document.getElementById("musica");
+
+let abierto = false;
 
 sobre.addEventListener("click", () => {
-    // 1. Abrimos la tapa y movemos el GIF hacia arriba (invisible al principio)
+
+    if(abierto) return;
+    abierto = true;
+
+    // Inicia la música en bucle
+    musica.play().catch(()=>{});
+
+    // Abrir el sobre
     sobre.classList.add("abierto");
 
-    // 2. Un momento después de que la tapa se abra, hacemos visible el GIF que sale
-    setTimeout(() => {
-        gifSalidaContenedor.classList.add("aparecer"); // Hace que la opacidad del gif-salida sea 1
-    }, 500); // 0.5 segundos de retraso para que la tapa se abra un poco primero
+    // Mostrar la carta
+    setTimeout(()=>{
+        gifSalidaContenedor.classList.add("aparecer");
+    },500);
 
-    // 3. Cuando termine toda la animación de salida, mostramos el fondo
-    setTimeout(() => {
+    // Ocultar el sobre y dejar solo el GIF
+    setTimeout(()=>{
         sobre.classList.add("oculto");
         fondoGif.classList.add("mostrar");
-    }, 2200); // 2.2 segundos para coordinar con la duración de la animación de salida (all 2s ease)
+    },2200);
+
+});
+
+// Detener la música cuando el usuario cierre la pestaña
+window.addEventListener("beforeunload", () => {
+    musica.pause();
+    musica.currentTime = 0;
 });
 </script>
 
 </body>
 </html>
+```
